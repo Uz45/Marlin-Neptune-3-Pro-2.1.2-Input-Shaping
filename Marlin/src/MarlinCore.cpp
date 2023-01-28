@@ -270,14 +270,18 @@ bool wait_for_heatup = true;
   bool wait_for_user; // = false;
 
   void wait_for_user_response(millis_t ms/*=0*/, const bool no_sleep/*=false*/) {
-    UNUSED(no_sleep);
-    KEEPALIVE_STATE(PAUSED_FOR_USER);
-    wait_for_user = true;
-    if (ms) ms += millis(); // expire time
-    while (wait_for_user && !(ms && ELAPSED(millis(), ms)))
-      idle(TERN_(ADVANCED_PAUSE_FEATURE, no_sleep));
-    wait_for_user = false;
-    while (ui.button_pressed()) safe_delay(50);
+    #if ENABLED(RTS_AVAILABLE)
+      wait_for_user = false;
+    #else
+      UNUSED(no_sleep);
+      KEEPALIVE_STATE(PAUSED_FOR_USER);
+      wait_for_user = true;
+      if (ms) ms += millis(); // expire time
+      while (wait_for_user && !(ms && ELAPSED(millis(), ms)))
+        idle(TERN_(ADVANCED_PAUSE_FEATURE, no_sleep));
+      wait_for_user = false;
+      while (ui.button_pressed()) safe_delay(50);
+    #endif
   }
 
 #endif
