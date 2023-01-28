@@ -32,6 +32,8 @@
 #include "../../../../module/motion.h"
 #include "../../../../module/planner.h"
 
+#include "../../../../gcode/gcode.h"
+
 #include "../../ui_api.h"
 #include "../../../marlinui.h"
 
@@ -75,7 +77,7 @@ void MKS_reset_settings() {
   mks_min_extrusion_temp = 0;
 }
 
-xyz_pos_t position_before_pause;
+xyze_pos_t position_before_pause;
 constexpr feedRate_t park_speed_xy = TERN(NOZZLE_PARK_FEATURE, NOZZLE_PARK_XY_FEEDRATE, 100),
                      park_speed_z  = TERN(NOZZLE_PARK_FEATURE, NOZZLE_PARK_Z_FEEDRATE,    5);
 
@@ -86,6 +88,19 @@ void MKS_pause_print_move() {
   // Save the current position, the raise amount, and 'already raised'
   TERN_(POWER_LOSS_RECOVERY, if (recovery.enabled) recovery.save(true, mks_park_pos.z, true));
 
+  #if ENABLED(RTS_AVAILABLE)
+    // gcode.process_subcommands_now(F("M108"));
+    // gcode.process_subcommands_now(F("M83"));
+    // gcode.process_subcommands_now(F("G1 E-10 F600"));
+    // gcode.process_subcommands_now(F("G90"));
+    planner.synchronize();
+    const float olde = current_position.e;
+    current_position.e -= 3;
+    line_to_current_position(MMM_TO_MMS(1200));
+    current_position.e = olde;
+    planner.set_e_position_mm(olde);
+  #endif
+
   destination.z = _MIN(current_position.z + mks_park_pos.z, Z_MAX_POS);
   prepare_internal_move_to_destination(park_speed_z);
 
@@ -94,10 +109,45 @@ void MKS_pause_print_move() {
 }
 
 void MKS_resume_print_move() {
+
+  #if ENABLED(RTS_AVAILABLE)
+    // gcode.process_subcommands_now(F("M108"));
+    // gcode.process_subcommands_now(F("M83"));
+    // gcode.process_subcommands_now(F("G1 E10 F150"));
+    // gcode.process_subcommands_now(F("G1 E-10 F600"));
+    // gcode.process_subcommands_now(F("G90"));
+
+    planner.synchronize();
+    const float olde = current_position.e;
+    current_position.e += 30;
+    line_to_current_position(MMM_TO_MMS(300));
+    current_position.e -= 3;
+    line_to_current_position(MMM_TO_MMS(1200));
+    current_position.e = olde;
+    planner.set_e_position_mm(olde);
+    planner.synchronize();
+  #endif
+
   destination.set(position_before_pause.x, position_before_pause.y);
   prepare_internal_move_to_destination(park_speed_xy);
+  //prepare_internal_move_to_destination(30);
   destination.z = position_before_pause.z;
   prepare_internal_move_to_destination(park_speed_z);
+  planner.synchronize();
+
+  #if ENABLED(RTS_AVAILABLE)
+    // gcode.process_subcommands_now(F("M108"));
+    // gcode.process_subcommands_now(F("M83"));
+    // gcode.process_subcommands_now(F("G1 E5 F500"));
+    // gcode.process_subcommands_now(F("G1 F2000"));
+    // gcode.process_subcommands_now(F("G90"));
+    current_position.e += 3;
+    line_to_current_position(MMM_TO_MMS(2000));
+    current_position.e = olde;
+    planner.set_e_position_mm(olde);
+    planner.synchronize();
+  #endif
+
   TERN_(POWER_LOSS_RECOVERY, if (recovery.enabled) recovery.save(true));
 }
 

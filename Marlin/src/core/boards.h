@@ -369,6 +369,7 @@
 #define BOARD_ERYONE_ERY32_MINI       4065  // Eryone Ery32 mini (STM32F103VE)
 #define BOARD_PANDA_PI_V29            4066  // Panda Pi V2.9 - Standalone (STM32F103RC)
 
+
 //
 // ARM Cortex-M4F
 //
@@ -421,6 +422,7 @@
 #define BOARD_ARTILLERY_RUBY          4238  // Artillery Ruby (STM32F401RC)
 #define BOARD_FYSETC_SPIDER_V2_2      4239  // FYSETC Spider V2.2 (STM32F446VE)
 #define BOARD_CREALITY_V24S1_301F4    4240  // Creality v2.4.S1_301F4 (STM32F401RC) as found in the Ender-3 S1 F4
+#define BOARD_MKS_E3D_V2              4241  // MKS Robin E3D (STM32F401RCT6)
 
 //
 // ARM Cortex M7
