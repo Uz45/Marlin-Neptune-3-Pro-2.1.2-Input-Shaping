@@ -171,6 +171,10 @@
   #include "../lcd/extui/dgus/DGUSDisplayDef.h"
 #endif
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+#endif
+
 #pragma pack(push, 1) // No padding between variables
 
 #if HAS_ETHERNET
@@ -3280,6 +3284,23 @@ void MarlinSettings::reset() {
   // Power-Loss Recovery
   //
   TERN_(POWER_LOSS_RECOVERY, recovery.enable(ENABLED(PLR_ENABLED_DEFAULT)));
+
+  #if ENABLED(RTS_AVAILABLE)
+    #if ENABLED(TJC_AVAILABLE)
+      #if ENABLED(POWER_LOSS_RECOVERY)
+        if(recovery.enabled==0)
+        {
+          LCD_SERIAL_2.printf("plrbutton.val=0");
+          LCD_SERIAL_2.printf("\xff\xff\xff");
+        }
+        else if(recovery.enabled==1)
+        {
+          LCD_SERIAL_2.printf("plrbutton.val=1");
+          LCD_SERIAL_2.printf("\xff\xff\xff");
+        }
+      #endif
+    #endif
+  #endif
 
   //
   // Firmware Retraction

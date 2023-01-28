@@ -35,6 +35,10 @@
   #include "../../module/planner.h"
 #endif
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "../../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+#endif
+
 extern xyze_pos_t destination;
 
 #if ENABLED(VARIABLE_G0_FEEDRATE)

@@ -254,6 +254,10 @@
   #include "tests/marlin_tests.h"
 #endif
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+#endif
+
 PGMSTR(M112_KILL_STR, "M112 Shutdown");
 
 MarlinState marlin_state = MF_INITIALIZING;

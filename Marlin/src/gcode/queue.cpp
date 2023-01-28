@@ -57,6 +57,10 @@ GCodeQueue queue;
   #include "../feature/repeat.h"
 #endif
 
+#if ENABLED(RTS_AVAILABLE)
+  #include "../lcd/extui/dgus/elegoo/DGUSDisplayDef.h"
+#endif
+
 // Frequently used G-code strings
 PGMSTR(G28_STR, "G28");
 
@@ -562,7 +566,13 @@ void GCodeQueue::get_serial_commands() {
     while (!ring_buffer.full() && !card.eof()) {
       const int16_t n = card.get();
       const bool card_eof = card.eof();
-      if (n < 0 && !card_eof) { SERIAL_ERROR_MSG(STR_SD_ERR_READ); continue; }
+      if (n < 0 && !card_eof) {
+        #if ENABLED(TJC_AVAILABLE)
+          LCD_SERIAL_2.printf("page err_sdread");
+          LCD_SERIAL_2.printf("\xff\xff\xff");
+        #endif
+        SERIAL_ERROR_MSG(STR_SD_ERR_READ); continue;
+      }
 
       CommandLine &command = ring_buffer.commands[ring_buffer.index_w];
       const char sd_char = (char)n;
