@@ -1,3 +1,5 @@
+<h2>This is a fork of Marlin firmware that includes changes from <a href="https://github.com/NARUTOfzr/Elegoo-Neptune-marlin2.1.1">Neptune marlin</a>, but is based on version 2.1.2 to add support for Input Shaping. You can compile it yourself or grab a .bin file from <a href="https://github.com/dderg/Marlin-Neptune-3-Pro/releases/tag/2.1.2-neptune">here</a></h2>
+
 <p align="center"><img src="buildroot/share/pixmaps/logo/marlin-outrun-nf-500.png" height="250" alt="MarlinFirmware's logo" /></p>
 
 <h1 align="center">Marlin 3D Printer Firmware</h1>
