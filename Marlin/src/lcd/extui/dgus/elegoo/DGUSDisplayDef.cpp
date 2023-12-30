@@ -1654,13 +1654,13 @@
 
             //X轴坐标
             memset(temp,0,sizeof(temp));
-            sprintf(temp, "main.xvalue.val=%d", (int)(100 * current_position[X_AXIS]));
+            sprintf(temp, "main.xvalue.val=%d", (int)(1000 * current_position[X_AXIS]));
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");  
 
             //Y轴坐标
             memset(temp,0,sizeof(temp));
-            sprintf(temp, "main.yvalue.val=%d", (int)(100 * current_position[Y_AXIS]));
+            sprintf(temp, "main.yvalue.val=%d", (int)(1000 * current_position[Y_AXIS]));
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");  
 
@@ -1672,7 +1672,7 @@
 
             //风扇速度         
             memset(temp,0,sizeof(temp));
-            sprintf(temp, "main.fanspeed.txt=\"%d\"", thermalManager.fan_speed[0]);
+            sprintf(temp, "main.fanspeed.txt=\"%d\"", (thermalManager.fan_speed[0]*100)/255);
             LCD_SERIAL_2.printf(temp);
             LCD_SERIAL_2.printf("\xff\xff\xff");              
           #endif

@@ -1604,7 +1604,7 @@ void Temperature::mintemp_error(const heater_id_t heater_id) {
             start_watching_hotend(e);               // If temp reached, turn off elapsed check
           else {
             TERN_(HAS_DWIN_E3V2_BASIC, DWIN_Popup_Temperature(0));
-            #if ENABLED(TJC_AVAILABLE)
+            #if ENABLED(RTS_AVAILABLE)
               #if ENABLED(TJC_AVAILABLE)
                 LCD_SERIAL_2.printf("page err_nozzleheat"); 
                 LCD_SERIAL_2.printf("\xff\xff\xff");

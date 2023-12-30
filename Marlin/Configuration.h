@@ -676,9 +676,14 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp   22.2
-    #define DEFAULT_Ki   1.80
-    #define DEFAULT_Kd  119.00
+    // #define DEFAULT_Kp   22.2
+    // #define DEFAULT_Ki   1.80
+    // #define DEFAULT_Kd  119.00
+
+    #define DEFAULT_Kp 20.67
+    #define DEFAULT_Ki 2.02
+    #define DEFAULT_Kd 52.93
+
   #endif
 #endif
 
@@ -743,7 +748,7 @@
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  * @section bed temp
  */
-//#define PIDTEMPBED
+#define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING
 
@@ -761,9 +766,14 @@
 
   // 120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   // from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  #define DEFAULT_bedKp 97.1
-  #define DEFAULT_bedKi 1.41
-  #define DEFAULT_bedKd 1675.16
+  // #define DEFAULT_bedKp 97.1
+  // #define DEFAULT_bedKi 1.41
+  // #define DEFAULT_bedKd 1675.16
+
+  #define DEFAULT_bedKp 160.17
+  #define DEFAULT_bedKi 31.28
+  #define DEFAULT_bedKd 546.73
+
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -1204,7 +1214,7 @@
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
 #if NEPTUNE_3_PRO
-  #define DEFAULT_MAX_ACCELERATION      { 1100, 900, 100, 2000 }
+  #define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 2000 }
 #elif NEPTUNE_3_PLUS
   #define DEFAULT_MAX_ACCELERATION      { 700, 700, 100, 2000 }
 #elif NEPTUNE_3_MAX
@@ -1224,9 +1234,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          2000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1500    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   2000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1256,7 +1266,7 @@
   #endif
 #endif
 
-#define DEFAULT_EJERK    5.0  // May be used by Linear Advance
+#define DEFAULT_EJERK    6.0  // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
