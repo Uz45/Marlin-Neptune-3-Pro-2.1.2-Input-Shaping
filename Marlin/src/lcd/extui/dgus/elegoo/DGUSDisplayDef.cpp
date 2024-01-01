@@ -3381,9 +3381,9 @@
         {
           if(temp_ctrl)
           {
-            if((thermalManager.temp_hotend[0].target + unit)>260)
+            if((thermalManager.temp_hotend[0].target + unit)>HEATER_0_MAXTEMP-15) //260
             {
-              thermalManager.temp_hotend[0].target = 260;
+              thermalManager.temp_hotend[0].target = HEATER_0_MAXTEMP-15; //260
             }
             else
             {
